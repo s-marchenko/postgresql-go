@@ -1,5 +1,0 @@
-development:
-  dialect: postgresql
-  datasource: postgres:TestSecret@tcp(localhost:5432)
-  table: migrations
-  dir: migrations

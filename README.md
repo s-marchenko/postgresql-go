@@ -4,15 +4,15 @@ docker run --name go-postgres -e POSTGRES_PASSWORD=TestSecret -e POSTGRES_DB=peo
 
 #### Database migration 
 
-$ go get -v github.com/rubenv/sql-migrate/...
-
-CREATE DATABASE peopleDatabase;
-
 CREATE TABLE peopleinfo (
 birthday text,
 names text,
 occupation text
 );
+
+docker run -v code/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database postgres://postgres:TestSecret@172.17.0.2:5432/peopledatabase?sslmode=disable up 1
+
+postgres://username:password@localhost/dbname
 
 #### PgAdmin
 
@@ -21,13 +21,11 @@ occupation text
         -e "PGADMIN_DEFAULT_PASSWORD=SuperSecret" \
         -d dpage/pgadmin4
         
-    
+#### Env variables
+
 export DBPORT=5432
 export DBHOST=localhost
 export DBUSER=postgres
 export DBPASS=TestSecret
 export DBNAME=peopledatabase
     
-docker run -v /Users/sergii.marchenko/go/src/github.com/s-marchenko/postgresql-go/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database postgres://postgres:TestSecret@172.17.0.2:5432/peopledatabase?sslmode=disable up 1
-
-postgres://username:password@localhost/dbname
