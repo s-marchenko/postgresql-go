@@ -10,13 +10,11 @@ clean_migrate: clean-db migrate
 
 build_mac:
 	cd code && \
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o release/website_darwin_amd64 . && \
-	cp -R static release/static
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o release/website_darwin_amd64 .
 
 build_linux:
 	cd code && \
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o release/website_linux_amd64 . && \
-	cp -R static release/static
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o release/website_linux_amd64 .
 
 build_docker: build_linux
 	cd code && \
@@ -27,6 +25,5 @@ docker_run: build_docker
 
 docker_rm:
 	docker rm $(docker ps -a | grep "website" | awk '{ print $1 }')
-	docker rm $(docker ps -a | grep "migrate/migrate" | awk '{ print $1 }')
 	docker rmi $(docker images | grep "website" | awk '{ print $3 }')
-
+	## docker rm $(docker ps -a | grep "migrate/migrate" | awk '{ print $1 }')

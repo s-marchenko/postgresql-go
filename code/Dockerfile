@@ -7,6 +7,5 @@ ENV DBPASS=TestSecret
 ENV DBNAME=peopledatabase
 
 COPY release/website_linux_amd64 /
-COPY release/static /static
 
 CMD ["/website_linux_amd64"]
