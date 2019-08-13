@@ -5,17 +5,16 @@ image: golang:latest
 stages:
   - build
 # working directory test_code
-postgre-go:
+website_linux_amd64:
   only:
     changes:
       - code/**/*
   before_script:
-    - ln -s /builds /go/src/github.com/code
+    - ln -s /builds /go/src/github.com/postgresql-go/code
 
   stage: build
   script:
-    - make
+    - make build_linux
   artifacts:
     paths:
-      - inventory_app/win_inventory.exe
-      - inventory_app/mac_inventory
+      - code/release/website_linux_amd64
