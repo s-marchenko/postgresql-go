@@ -10,6 +10,7 @@ website_linux_amd64:
     changes:
       - code/**/*
   before_script:
+    - ls -lah
     - ln -s /builds /go/src/gitlab.com
 
   stage: build
