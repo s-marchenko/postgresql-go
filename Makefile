@@ -10,11 +10,11 @@ clean_migrate: clean-db migrate
 
 build_mac:
 	cd code && \
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o release/website_darwin_amd64 .
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 packr build -o release/website_darwin_amd64 .
 
 build_linux:
 	cd code && \
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o release/website_linux_amd64 .
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 packr build -o release/website_linux_amd64 .
 
 build_docker: build_linux
 	cd code && \
