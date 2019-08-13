@@ -10,7 +10,7 @@ website_linux_amd64:
     changes:
       - code/**/*
   before_script:
-    - ln -s /builds /go/src/github.com/postgresql-go/code
+    - ln -s /builds /go/src/gitlab.com
 
   stage: build
   script:
