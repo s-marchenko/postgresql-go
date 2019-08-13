@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gobuffalo/packr"
 	"github.com/gorilla/mux"
 	// Import the `pq` package with a preceding underscore since it is imported as a side
 	// effect. The `pq` package is a GO Postgres driver for the `database/sql` package.
@@ -26,9 +27,12 @@ func newRouter() *mux.Router {
 	// Declare a router
 	r := mux.NewRouter()
 	// Declare static file directory
-	staticFileDirectory := http.Dir("./static/")
+	// staticFileDirectory := http.Dir("./static/")
 	// Create static file server for our static files, i.e., .html, .css, etc
-	staticFileServer := http.FileServer(staticFileDirectory)
+
+	box := packr.NewBox("./static/")
+	staticFileServer := http.FileServer(box)
+
 	// Create file handler. Although the static files are placed inside `./static/` folder
 	// in our local directory, it is served at the root (i.e., http://localhost:8080/)
 	// when browsed in a browser. Hence, we need `http.StripPrefix` function to change the
