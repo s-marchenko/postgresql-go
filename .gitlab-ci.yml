@@ -12,7 +12,8 @@ website_linux_amd64:
   before_script:
     - ls -lah
     - ln -s /builds /go/src/gitlab.com
-    - deb ensure
+    - go get -u github.com/gorilla/mux
+    - go get -u github.com/lib/pq
 
   stage: build
   script:
