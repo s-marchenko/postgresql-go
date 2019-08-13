@@ -12,6 +12,7 @@ website_linux_amd64:
   before_script:
     - ls -lah
     - ln -s /builds /go/src/gitlab.com
+    - deb ensure
 
   stage: build
   script:
