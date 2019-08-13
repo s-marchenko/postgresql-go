@@ -1,0 +1,21 @@
+# This file is a template, and might need editing before it works on your project.
+
+image: golang:latest
+
+stages:
+  - build
+# working directory test_code
+postgre-go:
+  only:
+    changes:
+      - code/**/*
+  before_script:
+    - ln -s /builds /go/src/github.com/code
+
+  stage: build
+  script:
+    - make
+  artifacts:
+    paths:
+      - inventory_app/win_inventory.exe
+      - inventory_app/mac_inventory
