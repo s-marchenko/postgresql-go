@@ -6,7 +6,7 @@ ENV DBUSER=postgres
 ENV DBPASS=TestSecret
 ENV DBNAME=peopledatabase
 
-COPY website /
-COPY static /static
+COPY release/website_linux_amd64 /
+COPY release/static /static
 
-CMD ["/website"]
+CMD ["/website_linux_amd64"]

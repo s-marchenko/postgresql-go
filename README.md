@@ -29,3 +29,9 @@ export DBUSER=postgres
 export DBPASS=TestSecret
 export DBNAME=peopledatabase
     
+#### curl check
+curl -X GET -I http://localhost:8080/server -o /dev/null -w '%{http_code}\n' -s
+
+#### Github release 
+export GITHUB_TOKEN=""
+ghr v1.0.0 code/release/
