@@ -41,5 +41,6 @@ func TestDatabaseExample(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	print("Ping DB has just finished")
 	defer db.Close()
 }
