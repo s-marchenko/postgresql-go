@@ -3,7 +3,7 @@ terraform {
 }
 
 provider "google" {
-  credentials	= "${file("${var.path_to_context}")}"
+  credentials	= file("${var.path_to_context}")
   project    	= var.environment
   region     	= var.region
 }
@@ -20,4 +20,5 @@ module "database" {
   source = "../database"
   environment = var.environment
   region = var.region
+  whitelist = var.whitelist
 }

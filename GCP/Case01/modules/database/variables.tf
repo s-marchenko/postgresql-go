@@ -10,6 +10,11 @@ variable "region" {
   description = "The region when the resource will be created"
 }
 
+variable "whitelist" {
+  description = "The list of IPs which have to be whitelisted"
+  type = list(string)
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # List of variables which have defaults
 # ---------------------------------------------------------------------------------------------------------------------

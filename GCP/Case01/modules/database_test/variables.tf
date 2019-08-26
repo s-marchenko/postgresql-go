@@ -16,3 +16,9 @@ variable "path_to_context" {
   description = "The path to your credentials file"
   default = "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
 }
+
+variable "whitelist" {
+  description = "The list of IPs which have to be whitelisted"
+  type = list(string)
+  //default = ["178.151.244.26","178.151.244.28"]
+}

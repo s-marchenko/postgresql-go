@@ -11,6 +11,9 @@ import (
 func TestDatabaseExample(t *testing.T) {
 	t.Parallel()
 
+	// Set default list of IPs to whitelist
+	listOfIPs := []string{"178.151.244.26", "178.151.244.28"}
+
 	terraformOptions := &terraform.Options{
 		// You should update this relative path to point at your mysql
 		// example directory!
@@ -18,6 +21,7 @@ func TestDatabaseExample(t *testing.T) {
 		Vars: map[string]interface{}{
 			"environment": "test",
 			"region":      "europe-north1",
+			"whitelist":   listOfIPs,
 		},
 	}
 	defer terraform.Destroy(t, terraformOptions)

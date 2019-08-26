@@ -5,6 +5,21 @@ terraform {
 # Create database
 # ---------------------------------------------------------------------------------------------------------------------
 
+locals {
+  auth_netw_postgres_allowed_1 = [
+  for i, addr in ["195.88.124.222", "195.88.124.221"] : {
+    name  = "onprem-${i + 1}"
+    value = addr
+  }
+  ]
+  auth_netw_postgres_allowed_2 = [
+    for i, addr in var.whitelist : {
+      name  = "poneip-${i + 1}"
+      value = addr
+    }
+  ]
+}
+
 resource "google_sql_database_instance" "sql_instance" {
   name             = "${var.environment}-${random_id.db_name_suffix.hex}"
   region           = var.region
@@ -15,12 +30,18 @@ resource "google_sql_database_instance" "sql_instance" {
     tier = var.db_tier
 
     ip_configuration {
-      ipv4_enabled        = true
-      //authorized_networks = [{data.null_data_source.auth_net_postgres_allowed.*.outputs}]
-      authorized_networks {
-          name  = "dev-pro"
-          value = "195.88.124.221/32"
-//        //data.null_data_source.auth_net_postgres_allowed.[*].outputs
+      ipv4_enabled = true
+
+      dynamic "authorized_networks" {
+        for_each = concat(
+        local.auth_netw_postgres_allowed_1,
+        local.auth_netw_postgres_allowed_2,
+        )
+        iterator = net
+        content {
+          name  = net.value.name
+          value = net.value.value
+        }
       }
     }
   }
