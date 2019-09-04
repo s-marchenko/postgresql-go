@@ -10,11 +10,6 @@ variable "region" {
   description = "The region when the resource will be created"
 }
 
-variable "whitelist" {
-  description = "The list of IPs which have to be whitelisted"
-  type = list(string)
-}
-
 variable "project_name" {
   description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
   //type = list(string)
@@ -24,8 +19,14 @@ variable "project_name" {
 # List of variables which have defaults
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "db_tier" {
-  description = "The database tier"
-  default = "db-f1-micro"
+variable "network" {
+  description = "The name of VPN which will be used"
+  default = "default"
 }
 
+variable "instances_to_lb" {
+  description = "The list of instances which have to be added to the load balancer"
+  //type        = list(string)
+  type        = string
+  default     = null
+}

@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.12, < 0.13"
 }
 # ---------------------------------------------------------------------------------------------------------------------
-# Create database
+# Create a database
 # ---------------------------------------------------------------------------------------------------------------------
 
 locals {
@@ -23,7 +23,7 @@ locals {
 resource "google_sql_database_instance" "sql_instance" {
   name             = "${var.environment}-${random_id.db_name_suffix.hex}"
   region           = var.region
-  project          = "learned-acolyte-221721"
+  project          = var.project_name
   database_version = "POSTGRES_9_6"
 
   settings {
@@ -54,7 +54,7 @@ resource "random_id" "db_name_suffix" {
 resource "google_sql_database" "database" {
   name             = "peopleDatabase"
   instance         = google_sql_database_instance.sql_instance.name
-  project          = "learned-acolyte-221721"
+  project          = var.project_name
   depends_on = [google_sql_database_instance.sql_instance]
 }
 
@@ -65,7 +65,7 @@ resource "google_sql_user" "sqladmin" {
   name             = "sqladmin"
   instance         = google_sql_database_instance.sql_instance.name
   password         = random_string.sqladminpassword.result
-  project          = "learned-acolyte-221721"
+  project          = var.project_name
 }
 
 resource "random_string" "sqladminpassword" {
@@ -79,7 +79,7 @@ resource "google_sql_user" "sqluser" {
   name             = "sqluser"
   instance         = google_sql_database_instance.sql_instance.name
   password         = random_string.userpassword.result
-  project          = "learned-acolyte-221721"
+  project          = var.project_name
 }
 
 resource "random_string" "userpassword" {

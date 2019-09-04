@@ -10,6 +10,10 @@ variable "region" {
   description = "The region when the resource will be created"
 }
 
+variable "network" {
+  description = "The network name where the resourve will be connected to"
+}
+
 variable "whitelist" {
   description = "The list of IPs which have to be whitelisted"
   type = list(string)
@@ -29,3 +33,23 @@ variable "db_tier" {
   default = "db-f1-micro"
 }
 
+variable "zone" {
+  description = "default zone"
+  default     = ["europe-north1-a", "europe-north1-b"]
+}
+
+variable "machine_type" {
+  description = "VM type"
+  default = "g1-small"
+}
+
+variable "vm_count" {
+  default = "3"
+}
+variable "role" {
+  default = "web"
+}
+
+variable "admin_user" {
+  default = "admin"
+}

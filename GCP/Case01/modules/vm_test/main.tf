@@ -11,15 +11,18 @@ provider "google" {
 terraform {
   backend "gcs" {
     bucket  = "test-tf-state-ie"
-    prefix  = "terraform/test/database"
+    prefix  = "terraform/test/vm"
     credentials	= "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
   }
 }
 
-module "database" {
-  source = "../database"
-  environment = var.environment
+module "VM" {
+  source = "../vm"
+  environment =var.environment
   region = var.region
-  whitelist = var.whitelist
   project_name = var.project_name
+  whitelist = var.whitelist
+  network = var.network
+  vm_count = var.vm_count
+  //path_to_context = var.path_to_context
 }

@@ -4,12 +4,24 @@
 
 variable "environment" {
   description = "The type of environmnet which can be dev, stg, prod or other"
-  //default = "test"
 }
 
 variable "region" {
   description = "The region when the resource will be created"
-  //default = "europe-north1"
+}
+
+variable "whitelist" {
+  description = "The list of IPs which have to be whitelisted"
+  type = list(string)
+}
+
+variable "network" {
+  description = "The network name where the resourve will be connected to"
+}
+
+variable "project_name" {
+  description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
+  //type = list(string)
 }
 
 variable "path_to_context" {
@@ -17,13 +29,6 @@ variable "path_to_context" {
   //default = "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
 }
 
-variable "whitelist" {
-  description = "The list of IPs which have to be whitelisted"
-  type = list(string)
-  //default = ["178.151.244.26","178.151.244.28"]
-}
-
-variable "project_name" {
-  description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
-  //type = list(string)
+variable "vm_count" {
+  description = "The count of VMs"
 }

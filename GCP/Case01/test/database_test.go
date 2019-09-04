@@ -2,6 +2,7 @@ package test
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	_ "github.com/lib/pq"
 	"log"
@@ -17,11 +18,13 @@ func TestDatabaseExample(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		// You should update this relative path to point at your mysql
 		// example directory!
-		TerraformDir: "../database_test",
+		TerraformDir: "../modules/database_test",
 		Vars: map[string]interface{}{
-			"environment": "test",
-			"region":      "europe-north1",
-			"whitelist":   listOfIPs,
+			"environment":     "test",
+			"region":          "europe-north1",
+			"whitelist":       listOfIPs,
+			"project_name":    "learned-acolyte-221721",
+			"path_to_context": "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json",
 		},
 	}
 	defer terraform.Destroy(t, terraformOptions)
@@ -33,18 +36,22 @@ func TestDatabaseExample(t *testing.T) {
 	dataBaseIP := terraform.OutputRequired(t, terraformOptions, "database_ip")
 	adminpass := terraform.OutputRequired(t, terraformOptions, "sqladminpassword")
 
+	fmt.Println("Logging into the database")
 	connStr := "postgres://sqladmin:" + adminpass + "@" + dataBaseIP + "/peopleDatabase?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
+	defer db.Close()
 
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("Trying to ping the database")
 
 	err = db.Ping()
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	print("Ping DB has just finished")
-	defer db.Close()
+
+	fmt.Println("Ping DB has just finished")
 }
