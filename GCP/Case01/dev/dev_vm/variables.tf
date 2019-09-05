@@ -10,23 +10,34 @@ variable "region" {
   description = "The region when the resource will be created"
 }
 
+variable "whitelist" {
+  description = "The list of IPs which have to be whitelisted"
+  type = list(string)
+}
+
+variable "network" {
+  description = "The network name where the resourve will be connected to"
+}
+
 variable "project_name" {
   description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
   //type = list(string)
+}
+
+variable "path_to_context" {
+  description = "The path to your credentials file"
+  //default = "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
 # List of variables which have defaults
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "network" {
-  description = "The name of VPN which will be used"
-  default = "default"
+variable "vm_count" {
+  description = "The count of VMs"
+  default = "2"
 }
 
-variable "instances_to_lb" {
-  description = "The list of instances which have to be added to the load balancer"
-  //type        = list(string)
-  type        = string
-  default     = null
+variable "code_version" {
+  //default = "v1.0.1"
 }

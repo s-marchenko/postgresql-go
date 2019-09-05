@@ -30,7 +30,9 @@ resource "google_sql_database_instance" "sql_instance" {
     tier = var.db_tier
 
     ip_configuration {
+
       ipv4_enabled = true
+      private_network = "projects/${var.project_name}/global/networks/${var.network}"
 
       dynamic "authorized_networks" {
         for_each = concat(
@@ -55,7 +57,7 @@ resource "google_sql_database" "database" {
   name             = "peopleDatabase"
   instance         = google_sql_database_instance.sql_instance.name
   project          = var.project_name
-  depends_on = [google_sql_database_instance.sql_instance]
+  depends_on       = [google_sql_database_instance.sql_instance]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

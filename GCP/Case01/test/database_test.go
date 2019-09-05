@@ -13,12 +13,12 @@ func TestDatabaseExample(t *testing.T) {
 	t.Parallel()
 
 	// Set default list of IPs to whitelist
-	listOfIPs := []string{"178.151.244.26", "178.151.244.28"}
+	listOfIPs := []string{"178.151.244.26", "195.88.124.221"}
 
 	terraformOptions := &terraform.Options{
 		// You should update this relative path to point at your mysql
 		// example directory!
-		TerraformDir: "../modules/database_test",
+		TerraformDir: "../modules/test_database",
 		Vars: map[string]interface{}{
 			"environment":     "test",
 			"region":          "europe-north1",
@@ -52,6 +52,4 @@ func TestDatabaseExample(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println("Ping DB has just finished")
 }

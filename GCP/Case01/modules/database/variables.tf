@@ -29,3 +29,7 @@ variable "db_tier" {
   default = "db-f1-micro"
 }
 
+variable "network" {
+  description = "The name of VPC"
+  default = "default"
+}

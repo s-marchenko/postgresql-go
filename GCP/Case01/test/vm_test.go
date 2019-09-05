@@ -11,7 +11,7 @@ func TestVmExample(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		// You should update this relative path to point at your mysql
 		// example directory!
-		TerraformDir: "../modules/vm_test",
+		TerraformDir: "../modules/test_vm",
 		Vars: map[string]interface{}{
 			"environment":     "test",
 			"region":          "europe-north1",

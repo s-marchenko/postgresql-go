@@ -19,14 +19,18 @@ variable "whitelist" {
   type = list(string)
 }
 
-variable "project_name" {
-  description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
-  //type = list(string)
-}
-
 # ---------------------------------------------------------------------------------------------------------------------
 # List of variables which have defaults
 # ---------------------------------------------------------------------------------------------------------------------
+
+variable "code_version" {
+  default = "v1.0.1"
+}
+
+variable "project_name" {
+  description = "The name of GCP progect. Ussually you can get the project name by running the command: gcloud projects list "
+  default = "learned-acolyte-221721"
+}
 
 variable "db_tier" {
   description = "The database tier"

@@ -4,10 +4,23 @@
 
 variable "environment" {
   description = "The type of environmnet which can be dev, stg, prod or other"
+  //default = "test"
 }
 
 variable "region" {
   description = "The region when the resource will be created"
+  //default = "europe-north1"
+}
+
+variable "path_to_context" {
+  description = "The path to your credentials file"
+  //default = "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
+}
+
+variable "whitelist" {
+  description = "The list of IPs which have to be whitelisted"
+  type = list(string)
+  //default = ["178.151.244.26","178.151.244.28"]
 }
 
 variable "project_name" {
@@ -15,7 +28,6 @@ variable "project_name" {
   //type = list(string)
 }
 
-variable "path_to_context" {
-  description = "The path to your credentials file"
-  //default = "/Users/sergii.marchenko/work/keys/gcp/Iegor-072a850167f3.json"
+variable "network" {
+  description = "The name of VPC which will be used"
 }

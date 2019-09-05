@@ -18,8 +18,13 @@ export DBUSER= "Your DB user"
 
 export DBPASS= "Your DB Password"
 
-echo export DBNAME = "Your DB Name"
+export DBNAME= "Your DB Name"
 
 #### Additional info
 
 You can check the server where the application runs on using http:/yourIP/server endpoint 
+
+#### Download and install
+
+curl -L https://github.com/s-marchenko/postgresql-go/releases/download/v1.0.0/website_linux_amd64 --output postgresql
+chmod 775 postgresql
