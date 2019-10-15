@@ -28,4 +28,5 @@ jobs:
         fi
 
     - name: Build
+      working-directory: ./code
       run: go build -v .
