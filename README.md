@@ -1,3 +1,7 @@
+# Go store app
+$ go get -u github.com/gobuffalo/packr/packr
+
+
 #### How to run docker image with PostreSQL
 
 docker run --name go-postgres -e POSTGRES_PASSWORD=TestSecret -e POSTGRES_DB=peopledatabase -p 5432:5432 -d postgres:12-alpine

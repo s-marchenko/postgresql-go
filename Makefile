@@ -1,10 +1,17 @@
 clean-db:
 	docker rm -f go-postgres
-	docker run --name go-postgres -e POSTGRES_PASSWORD=TestSecret -e POSTGRES_DB=peopledatabase -p 5432:5432 -d postgres:12-alpine
+	docker run -d --name go-postgres \
+	-e POSTGRES_PASSWORD=TestSecret \
+	-e POSTGRES_DB=peopledatabase \
+	-p 5432:5432 \
+	--add-host=host.docker.internal:host-gateway \
+	postgres:12-alpine
 	sleep 2
 
 migrate:
-	docker run -v /Users/sergii.marchenko/go/src/github.com/s-marchenko/postgresql-go/code/migrations:/migrations --network host migrate/migrate -path=/migrations/ -database postgres://postgres:TestSecret@172.17.0.2:5432/peopledatabase?sslmode=disable up 1
+	docker run --rm -v $(shell pwd)/code/migrations:/migrations \
+	--network host migrate/migrate -path=/migrations/ \
+	-database postgres://postgres:TestSecret@172.17.0.2:5432/peopledatabase?sslmode=disable up 1
 
 clean_migrate: clean-db migrate
 
@@ -21,7 +28,12 @@ build_docker: build_linux
 	docker build -t website -f Dockerfile .
 
 docker_run: build_docker
-	docker run -p 8080:8080 website
+	docker run -p 8080:8080 \
+	--env DBPORT='5432' \
+	--env DBHOST='host.docker.internal' \
+	--env DBUSER=postgres \
+	--env DBPASS=TestSecret \
+	--env DBNAME=peopledatabase website
 
 docker_rm:
 	docker rm $(docker ps -a | grep "website" | awk '{ print $1 }')
