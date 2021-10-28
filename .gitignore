@@ -24,3 +24,6 @@
 # binary files
 website_darwin_amd64
 website_linux_amd64
+
+# idea files
+**/.idea/*

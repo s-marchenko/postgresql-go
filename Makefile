@@ -9,7 +9,7 @@ clean-db:
 	sleep 2
 
 migrate:
-	docker run --rm -v $(shell pwd)/code/migrations:/migrations \
+	docker run -rm -v $(shell pwd)/code/migrations:/migrations \
 	--network host migrate/migrate -path=/migrations/ \
 	-database postgres://postgres:TestSecret@172.17.0.2:5432/peopledatabase?sslmode=disable up 1
 
@@ -33,7 +33,8 @@ docker_run: build_docker
 	--env DBHOST='host.docker.internal' \
 	--env DBUSER=postgres \
 	--env DBPASS=TestSecret \
-	--env DBNAME=peopledatabase website
+	--env DBNAME=peopledatabase \
+	website
 
 docker_rm:
 	docker rm $(docker ps -a | grep "website" | awk '{ print $1 }')

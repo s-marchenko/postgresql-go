@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+ people_database:
+    container_name: people_database
+    hostname: people_database
+    image: postgres:9.6
+    volumes:
+      - ./volume:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=peopledatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=TestSecret
+    ports:
+      - 54321:5432
+    restart: unless-stopped
+    healthcheck:
+      test: pg_isready -U postgres
+
+ migration:
+    container_name: migrate
+    hostname: migrate
+    image: migrate/migrate
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 2
+    command: "-path=/migrations/ -database postgres://postgres:TestSecret@people_database:5432/peopledatabase?sslmode=disable up 1"
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      people_database:
+        condition: service_healthy
+
+ people_api:
+    container_name: website
+    hostname: website
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    environment:
+      DBPORT: 5432
+      DBHOST: people_database
+      DBUSER: postgres
+      DBPASS: TestSecret
+      DBNAME: peopledatabase
+    depends_on:
+      - migration
+      - people_database
